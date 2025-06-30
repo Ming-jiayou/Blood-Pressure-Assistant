@@ -4,11 +4,90 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BPA.Views.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="BPAHomePage">
+      Title="血压助手">
 
-    <Grid>
-        <TextBlock Text="{Binding ViewModel.Home}"></TextBlock>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Input Form -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="记录血压" FontSize="24" FontWeight="Bold"/>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                    <TextBlock Text="收缩压（高压）"/>
+                    <ui:NumberBox Value="{Binding ViewModel.Systolic, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="mmHg"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="6,0">
+                    <TextBlock Text="舒张压（低压）"/>
+                    <ui:NumberBox Value="{Binding ViewModel.Diastolic, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="mmHg"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="6,0,0,0">
+                    <TextBlock Text="心率"/>
+                    <ui:NumberBox Value="{Binding ViewModel.HeartRate, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="次/分"/>
+                </StackPanel>
+            </Grid>
+
+            <ui:Button 
+                Icon="Save24" 
+                Content="保存记录"
+                Command="{Binding ViewModel.SaveRecordCommand}"
+                HorizontalAlignment="Right"/>
+        </StackPanel>
+
+        <!-- Records List -->
+        <ListView 
+            Grid.Row="1" 
+            Margin="0,12,0,0"
+            ItemsSource="{Binding ViewModel.Records}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock>
+                                <Run Text="收缩压: "/>
+                                <Run Text="{Binding Systolic}"/>
+                                <Run Text=" mmHg"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="舒张压: "/>
+                                <Run Text="{Binding Diastolic}"/>
+                                <Run Text=" mmHg"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="心率: "/>
+                                <Run Text="{Binding HeartRate}"/>
+                                <Run Text=" 次/分"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <TextBlock 
+                            Grid.Column="2" 
+                            Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                            Foreground="Gray"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
