@@ -33,17 +33,15 @@ namespace BPA
             .ConfigureServices((context, services) =>
             {
                 // 添加数据库服务
-               
                 var projectRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..");
-
-                // 确保路径是规范化的，去除冗余的 ..
                 projectRootPath = Path.GetFullPath(projectRootPath);
-
-                // 构建数据库文件的完整路径
-                // 它会是 D:\Learning\MyProject\Blood-Pressure-Assistant\BPA\Data\bpa.db
                 var dbPath = Path.Combine(projectRootPath, "Data", "bpa.db");
+                
                 services.AddDbContext<BPADbContext>(options =>
                     options.UseSqlite($"Data Source={dbPath}"));
+
+                // 注册仓储服务
+                services.AddScoped<IBloodPressureRepository, BloodPressureRepository>();
 
                 services.AddHostedService<ApplicationHostService>();
 
