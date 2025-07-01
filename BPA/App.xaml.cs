@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
+using Microsoft.EntityFrameworkCore;
+using BPA.Data;
+using Wpf.Ui.Abstractions;
+using Wpf.Ui.DependencyInjection;
 
 namespace BPA
 {
@@ -28,10 +32,15 @@ namespace BPA
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((context, services) =>
             {
+                // 添加数据库服务
+                var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "bpa.db");
+                services.AddDbContext<BPADbContext>(options =>
+                    options.UseSqlite($"Data Source={dbPath}"));
+
                 services.AddHostedService<ApplicationHostService>();
 
                 // Page resolver service
-                services.AddSingleton<IPageService, PageService>();
+                services.AddNavigationViewPageProvider();
 
                 // Theme manipulation
                 services.AddSingleton<IThemeService, ThemeService>();

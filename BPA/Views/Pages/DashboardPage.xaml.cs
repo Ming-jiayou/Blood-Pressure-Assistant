@@ -1,4 +1,5 @@
 ﻿using BPA.ViewModels.Pages;
+using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Controls;
 
 namespace BPA.Views.Pages

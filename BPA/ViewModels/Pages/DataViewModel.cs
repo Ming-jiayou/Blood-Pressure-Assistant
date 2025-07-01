@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media;
 using BPA.Models;
+using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Controls;
 
 namespace BPA.ViewModels.Pages
@@ -10,14 +11,6 @@ namespace BPA.ViewModels.Pages
 
         [ObservableProperty]
         private IEnumerable<DataColor> _colors;
-
-        public void OnNavigatedTo()
-        {
-            if (!_isInitialized)
-                InitializeViewModel();
-        }
-
-        public void OnNavigatedFrom() { }
 
         private void InitializeViewModel()
         {
@@ -43,5 +36,15 @@ namespace BPA.ViewModels.Pages
 
             _isInitialized = true;
         }
+
+        public Task OnNavigatedToAsync()
+        {
+            if (!_isInitialized)
+                InitializeViewModel();
+
+            return Task.CompletedTask;
+        }
+
+        public Task OnNavigatedFromAsync() => Task.CompletedTask;
     }
 }
