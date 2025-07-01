@@ -7,8 +7,7 @@ namespace BPA.Data
     {
         public BPADbContext(DbContextOptions<BPADbContext> options)
             : base(options)
-        {
-            Database.EnsureCreated();  // 确保数据库被创建
+        {          
         }
 
         public DbSet<BloodPressureRecord> BloodPressureRecords { get; set; }

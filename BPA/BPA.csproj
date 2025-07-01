@@ -37,4 +37,10 @@
     <Resource Include="Assets\wpfui-icon-1024.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\bpa.db">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
