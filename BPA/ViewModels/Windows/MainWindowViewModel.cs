@@ -11,25 +11,19 @@ namespace BPA.ViewModels.Windows
         [ObservableProperty]
         private ObservableCollection<object> _menuItems = new()
         {
-            //new NavigationViewItem()
-            //{
-            //    Content = "Home",
-            //    Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
-            //    TargetPageType = typeof(Views.Pages.DashboardPage)
-            //},
+          
+             new NavigationViewItem()
+            {
+                Content = "BPA",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
+                TargetPageType = typeof(Views.Pages.BPAHomePage)
+            },
             new NavigationViewItem()
             {
                 Content = "Data",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
                 TargetPageType = typeof(Views.Pages.DataPage)
             },
-            new NavigationViewItem()
-            {
-                Content = "BPA",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
-                TargetPageType = typeof(Views.Pages.BPAHomePage)
-            }
-
         };
 
         [ObservableProperty]

@@ -23,28 +23,36 @@
 
         <!-- Input Form -->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="记录血压" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="记录血压" FontSize="24" FontWeight="Bold" Margin="0"/>
             
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                <StackPanel Grid.Column="0" Margin="2">
                     <TextBlock Text="收缩压（高压）"/>
                     <ui:NumberBox Value="{Binding ViewModel.Systolic, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="mmHg"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Margin="6,0">
+                <StackPanel Grid.Column="1" Margin="2">
                     <TextBlock Text="舒张压（低压）"/>
                     <ui:NumberBox Value="{Binding ViewModel.Diastolic, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="mmHg"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" Margin="6,0,0,0">
+                <StackPanel Grid.Column="2" Margin="2">
                     <TextBlock Text="心率"/>
                     <ui:NumberBox Value="{Binding ViewModel.HeartRate, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="次/分"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Margin="20">
+                    <ui:Button                    
+                           Icon="Save24" 
+                           Content="保存记录"
+                           Command="{Binding ViewModel.SaveRecordCommand}"
+                           HorizontalAlignment="Center"/>
                 </StackPanel>
             </Grid>
 
@@ -55,11 +63,11 @@
                 Margin="0,8,0,8"
                 Visibility="{Binding ViewModel.ValidationMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
 
-            <ui:Button 
+            <!--<ui:Button 
                 Icon="Save24" 
                 Content="保存记录"
                 Command="{Binding ViewModel.SaveRecordCommand}"
-                HorizontalAlignment="Right"/>
+                HorizontalAlignment="Right"/>-->
         </StackPanel>
 
         <!-- Records List -->

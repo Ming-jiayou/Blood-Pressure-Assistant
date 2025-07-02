@@ -19,25 +19,48 @@
     mc:Ignorable="d">
 
     <Grid>
-        <ui:VirtualizingItemsControl
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}"
-            VirtualizingPanel.CacheLengthUnit="Item">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:DataColor}">
-                    <ui:Button
-                        Width="80"
-                        Height="80"
-                        Margin="2"
-                        Padding="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Appearance="Secondary"
-                        Background="{Binding Color, Mode=OneWay}"
-                        FontSize="25"
-                        Icon="Fluent24" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ui:VirtualizingItemsControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <ui:Button
+                Appearance="Primary"
+                Icon="ArrowClockwise24"
+                Content="刷新"
+                Command="{Binding ViewModel.RefreshDataCommand}"
+                Margin="0,0,10,0"/>
+            <ui:Button
+                Appearance="Danger"
+                Icon="Delete24"
+                Content="删除"
+                Command="{Binding ViewModel.DeleteRecordCommand}"
+                IsEnabled="{Binding ViewModel.SelectedRecord, Converter={StaticResource NotNullToBooleanConverter}}"/>
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="1"
+            ItemsSource="{Binding ViewModel.Records}"
+            SelectedItem="{Binding ViewModel.SelectedRecord}"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            GridLinesVisibility="All"
+            AlternatingRowBackground="{DynamicResource ControlFillColorSecondaryBrush}"
+            Background="{DynamicResource ApplicationBackgroundBrush}"
+            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="时间" Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm}}" Width="150"/>
+                <DataGridTextColumn Header="收缩压" Binding="{Binding Systolic}" Width="100"/>
+                <DataGridTextColumn Header="舒张压" Binding="{Binding Diastolic}" Width="100"/>
+                <DataGridTextColumn Header="心率" Binding="{Binding HeartRate}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ui:ProgressRing 
+            Grid.Row="1"
+            IsIndeterminate="True" 
+            Visibility="{Binding ViewModel.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </Page>
