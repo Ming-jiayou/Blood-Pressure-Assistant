@@ -26,6 +26,9 @@ namespace BPA.ViewModels.Pages
         private int heartRate;
 
         [ObservableProperty]
+        private string validationMessage = string.Empty;
+
+        [ObservableProperty]
         private ObservableCollection<BloodPressureRecord> records = new();
 
         [ObservableProperty]
@@ -60,6 +63,26 @@ namespace BPA.ViewModels.Pages
         {
             try
             {
+                // 验证输入数值
+                if (Systolic < 80)
+                {
+                    ValidationMessage = "高压数值必须大于80，请检查输入";
+                    return;
+                }
+                if (Diastolic < 50)
+                {
+                    ValidationMessage = "低压数值必须大于50，请检查输入";
+                    return;
+                }
+                if (HeartRate < 45)
+                {
+                    ValidationMessage = "心率必须大于45，请检查输入";
+                    return;
+                }
+
+                // 清除验证消息
+                ValidationMessage = string.Empty;
+
                 var record = new BloodPressureRecord
                 {
                     Systolic = Systolic,
@@ -80,6 +103,7 @@ namespace BPA.ViewModels.Pages
             {
                 // 在实际应用中，你应该使用proper logging或错误处理
                 System.Diagnostics.Debug.WriteLine($"保存记录时出错: {ex.Message}");
+                ValidationMessage = $"保存记录时出错: {ex.Message}";
             }
         }
 

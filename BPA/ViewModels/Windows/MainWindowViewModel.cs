@@ -25,7 +25,7 @@ namespace BPA.ViewModels.Windows
             },
             new NavigationViewItem()
             {
-                Content = "BPAHome",
+                Content = "BPA",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
                 TargetPageType = typeof(Views.Pages.BPAHomePage)
             }
@@ -37,7 +37,7 @@ namespace BPA.ViewModels.Windows
         {
             new NavigationViewItem()
             {
-                Content = "Settings",
+                Content = "设置",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
                 TargetPageType = typeof(Views.Pages.SettingsPage)
             }
