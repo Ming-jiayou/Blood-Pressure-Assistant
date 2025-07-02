@@ -8,6 +8,7 @@ using BPA.Models;
 using BPA.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Wpf.Ui.Controls;
 
 namespace BPA.ViewModels.Pages
 {
@@ -69,7 +70,7 @@ namespace BPA.ViewModels.Pages
 
                 await _repository.AddRecordAsync(record);
                 Records.Insert(0, record);
-                
+
                 // Reset input fields
                 Systolic = 0;
                 Diastolic = 0;
@@ -80,6 +81,12 @@ namespace BPA.ViewModels.Pages
                 // 在实际应用中，你应该使用proper logging或错误处理
                 System.Diagnostics.Debug.WriteLine($"保存记录时出错: {ex.Message}");
             }
+        }
+
+        [RelayCommand]
+        private void Test()
+        {
+           
         }
     }
 }

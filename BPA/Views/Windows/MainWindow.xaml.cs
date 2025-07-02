@@ -51,7 +51,7 @@ namespace BPA.Views.Windows
             // Make sure that closing this window will begin the process of closing the application.
             Application.Current.Shutdown();
         }
-
+     
         INavigationView INavigationWindow.GetNavigation()
         {
             throw new NotImplementedException();
