@@ -62,5 +62,13 @@ namespace BPA.Data
                 .Take(count)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<BloodPressureRecord>> GetRecordsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _context.BloodPressureRecords
+                .Where(r => r.Timestamp >= startDate && r.Timestamp <= endDate)
+                .OrderByDescending(r => r.Timestamp)
+                .ToListAsync();
+        }
     }
 } 

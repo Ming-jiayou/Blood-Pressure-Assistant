@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using BPA.Models;
 using BPA.Data;
 using System.Collections.ObjectModel;
@@ -23,6 +24,15 @@ namespace BPA.ViewModels.Pages
         [ObservableProperty]
         private bool _isLoading;
 
+        [ObservableProperty]
+        private DateTime _startDate = DateTime.Today.AddDays(-30); // 默认显示最近30天
+
+        [ObservableProperty]
+        private DateTime _endDate = DateTime.Today;
+
+        [ObservableProperty]
+        private bool _useCustomDateRange;
+
         public DataViewModel(IBloodPressureRepository repository)
         {
             _repository = repository;
@@ -34,7 +44,10 @@ namespace BPA.ViewModels.Pages
             try
             {
                 IsLoading = true;
-                var data = await _repository.GetAllRecordsAsync();
+                var data = UseCustomDateRange 
+                    ? await _repository.GetRecordsByDateRangeAsync(StartDate, EndDate.AddDays(1).AddSeconds(-1))
+                    : await _repository.GetAllRecordsAsync();
+                
                 Records.Clear();
                 foreach (var record in data)
                 {
@@ -43,7 +56,6 @@ namespace BPA.ViewModels.Pages
             }
             catch (Exception ex)
             {
-                // TODO: Add proper error handling
                 System.Diagnostics.Debug.WriteLine($"Error loading data: {ex.Message}");
             }
             finally
@@ -65,7 +77,6 @@ namespace BPA.ViewModels.Pages
             }
             catch (Exception ex)
             {
-                // TODO: Add proper error handling
                 System.Diagnostics.Debug.WriteLine($"Error deleting record: {ex.Message}");
             }
         }
@@ -74,6 +85,38 @@ namespace BPA.ViewModels.Pages
         private async Task RefreshData()
         {
             await LoadDataAsync();
+        }
+
+        partial void OnStartDateChanged(DateTime value)
+        {
+            if (value > EndDate)
+            {
+                EndDate = value;
+            }
+            if (_isInitialized)
+            {
+                RefreshDataCommand.Execute(null);
+            }
+        }
+
+        partial void OnEndDateChanged(DateTime value)
+        {
+            if (value < StartDate)
+            {
+                StartDate = value;
+            }
+            if (_isInitialized)
+            {
+                RefreshDataCommand.Execute(null);
+            }
+        }
+
+        partial void OnUseCustomDateRangeChanged(bool value)
+        {
+            if (_isInitialized)
+            {
+                RefreshDataCommand.Execute(null);
+            }
         }
 
         public async Task OnNavigatedToAsync()

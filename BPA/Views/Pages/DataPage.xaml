@@ -21,26 +21,66 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,10">
+            <ui:ToggleSwitch
+                Content="自定义时间范围"
+                IsChecked="{Binding ViewModel.UseCustomDateRange}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Grid.Column="0" 
+                Text="从："
+                VerticalAlignment="Center"
+                Margin="0,0,5,0"
+                IsEnabled="{Binding ViewModel.UseCustomDateRange}"/>
+            <DatePicker 
+                Grid.Column="1"
+                SelectedDate="{Binding ViewModel.StartDate}"
+                IsEnabled="{Binding ViewModel.UseCustomDateRange}"/>
+
+            <TextBlock 
+                Grid.Column="2" 
+                Text="到："
+                VerticalAlignment="Center"
+                Margin="10,0,5,0"
+                IsEnabled="{Binding ViewModel.UseCustomDateRange}"/>
+            <DatePicker 
+                Grid.Column="3"
+                SelectedDate="{Binding ViewModel.EndDate}"
+                IsEnabled="{Binding ViewModel.UseCustomDateRange}"/>
+
             <ui:Button
+                Grid.Column="4"
                 Appearance="Primary"
                 Icon="ArrowClockwise24"
                 Content="刷新"
                 Command="{Binding ViewModel.RefreshDataCommand}"
-                Margin="0,0,10,0"/>
+                Margin="10,0,10,0"/>
             <ui:Button
+                Grid.Column="5"
                 Appearance="Danger"
                 Icon="Delete24"
                 Content="删除"
                 Command="{Binding ViewModel.DeleteRecordCommand}"
                 IsEnabled="{Binding ViewModel.SelectedRecord, Converter={StaticResource NotNullToBooleanConverter}}"/>
-        </StackPanel>
+        </Grid>
 
         <DataGrid
-            Grid.Row="1"
+            Grid.Row="2"
             ItemsSource="{Binding ViewModel.Records}"
             SelectedItem="{Binding ViewModel.SelectedRecord}"
             AutoGenerateColumns="False"
@@ -59,7 +99,7 @@
         </DataGrid>
 
         <ui:ProgressRing 
-            Grid.Row="1"
+            Grid.Row="2"
             IsIndeterminate="True" 
             Visibility="{Binding ViewModel.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>

@@ -37,5 +37,12 @@ namespace BPA.Data
         /// </summary>
         /// <param name="count">要获取的记录数量</param>
         Task<IEnumerable<BloodPressureRecord>> GetRecentRecordsAsync(int count);
+
+        /// <summary>
+        /// 按时间范围获取血压记录
+        /// </summary>
+        /// <param name="startDate">开始时间</param>
+        /// <param name="endDate">结束时间</param>
+        Task<IEnumerable<BloodPressureRecord>> GetRecordsByDateRangeAsync(DateTime startDate, DateTime endDate);
     }
 } 
