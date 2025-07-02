@@ -24,7 +24,7 @@ namespace BPA.Views.Windows
             InitializeComponent();
             SetPageService(navigationViewPageProvider);
 
-            navigationService.SetNavigationControl(RootNavigation);
+            //navigationService.SetNavigationControl(RootNavigation);
         }
 
         #region INavigationWindow methods
