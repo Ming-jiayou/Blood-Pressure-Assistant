@@ -122,9 +122,8 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
-                    <StackPanel Background="Gray">
-                        <TextBlock>niaho</TextBlock>
-                        <oxy:Plot Title="{Binding ViewModel.Title}" Height="100" Width="80" Background="DarkRed">
+                    <StackPanel>
+                        <oxy:Plot Title="{Binding ViewModel.Title}" Height="500">
                             <oxy:Plot.Series>
                                 <oxy:LineSeries ItemsSource="{Binding ViewModel.Points}"/>
                             </oxy:Plot.Series>
