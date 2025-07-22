@@ -17,14 +17,5 @@ namespace BPA.Views.Pages
 
             InitializeComponent();
         }
-
-        private void ViewChart_Click(object sender, RoutedEventArgs e)
-        {
-            // 切换到图表标签页
-            ChartTab.IsSelected = true;
-            
-            // 刷新图表数据
-            ViewModel.UpdateChartCommand.Execute(null);
-        }
     }
 }

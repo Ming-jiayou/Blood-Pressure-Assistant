@@ -47,6 +47,9 @@ namespace BPA.ViewModels.Pages
         [ObservableProperty]
         private bool _showHeartRate = true;
 
+        [ObservableProperty]
+        private int _selectedTabIndex = 0;
+
         public string Title { get; private set; }
 
         public PlotModel PlotModel { get; private set; }
@@ -177,6 +180,13 @@ namespace BPA.ViewModels.Pages
         private void UpdateChart()
         {
             UpdatePlotModel();
+        }
+
+        [RelayCommand]
+        private void ViewChart()
+        {
+            SelectedTabIndex = 1; // 切换到图表标签页
+            UpdatePlotModel();    // 刷新图表数据
         }
 
         // 当显示选项改变时更新图表

@@ -20,7 +20,7 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <TabControl Margin="0,8,0,0">
+        <TabControl Margin="0,8,0,0" SelectedIndex="{Binding ViewModel.SelectedTabIndex, Mode=TwoWay}">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -94,7 +94,7 @@
              Appearance="Primary"
              Icon="ChartMultiple24"
              Content="查看图表"
-             Click="ViewChart_Click"/>
+             Command="{Binding ViewModel.ViewChartCommand}"/>
                     </Grid>
 
                     <DataGrid
