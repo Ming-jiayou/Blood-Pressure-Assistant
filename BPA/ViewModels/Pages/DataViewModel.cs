@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Abstractions.Controls;
 using OxyPlot;
 using OxyPlot.Series;
+using OxyPlot.Axes;
 
 namespace BPA.ViewModels.Pages
 {
@@ -37,23 +38,40 @@ namespace BPA.ViewModels.Pages
 
         public string Title { get; private set; }
 
-        public IList<DataPoint> Points { get; private set; }
+        public PlotModel PlotModel { get; private set; }
+
 
         public DataViewModel(IBloodPressureRepository repository)
         {
             _repository = repository;
             _records = new ObservableCollection<BloodPressureRecord>();
 
-            this.Title = "Example 2";
-            this.Points = new List<DataPoint>
-                              {
-                                  new DataPoint(0, 4),
-                                  new DataPoint(10, 13),
-                                  new DataPoint(20, 15),
-                                  new DataPoint(30, 16),
-                                  new DataPoint(40, 12),
-                                  new DataPoint(50, 12)
-                              };
+            Title = "测试";
+
+            // Create the plot model
+            PlotModel = new PlotModel { Title = Title};
+
+            PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
+            PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+
+            // Create two line series (markers are hidden by default)
+            var series1 = new LineSeries { Title = "Series 1", MarkerType = MarkerType.Circle };
+            series1.Points.Add(new DataPoint(0, 0));
+            series1.Points.Add(new DataPoint(10, 18));
+            series1.Points.Add(new DataPoint(20, 12));
+            series1.Points.Add(new DataPoint(30, 8));
+            series1.Points.Add(new DataPoint(40, 15));
+
+            var series2 = new LineSeries { Title = "Series 2", MarkerType = MarkerType.Square };
+            series2.Points.Add(new DataPoint(0, 4));
+            series2.Points.Add(new DataPoint(10, 12));
+            series2.Points.Add(new DataPoint(20, 16));
+            series2.Points.Add(new DataPoint(30, 25));
+            series2.Points.Add(new DataPoint(40, 5));
+
+            // Add the series to the plot model
+            PlotModel.Series.Add(series1);
+            PlotModel.Series.Add(series2);
         }
 
         private async Task LoadDataAsync()

@@ -123,11 +123,7 @@
                 </TabItem.Header>
                 <Grid>
                     <StackPanel>
-                        <oxy:Plot Title="{Binding ViewModel.Title}" Height="500">
-                            <oxy:Plot.Series>
-                                <oxy:LineSeries ItemsSource="{Binding ViewModel.Points}"/>
-                            </oxy:Plot.Series>
-                        </oxy:Plot>
+                        <oxy:PlotView Model="{Binding ViewModel.PlotModel}" Height="500"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
