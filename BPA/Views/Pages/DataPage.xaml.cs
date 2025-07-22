@@ -1,10 +1,12 @@
 ﻿using BPA.ViewModels.Pages;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace BPA.Views.Pages
 {
-    public partial class DataPage : INavigableView<DataViewModel>
+    public partial class DataPage : Page, INavigableView<DataViewModel>
     {
         public DataViewModel ViewModel { get; }
 
@@ -14,6 +16,15 @@ namespace BPA.Views.Pages
             DataContext = this;
 
             InitializeComponent();
+        }
+
+        private void ViewChart_Click(object sender, RoutedEventArgs e)
+        {
+            // 切换到图表标签页
+            ChartTab.IsSelected = true;
+            
+            // 刷新图表数据
+            ViewModel.UpdateChartCommand.Execute(null);
         }
     }
 }
