@@ -220,7 +220,7 @@ namespace BPA.ViewModels.Pages
                 }
 
                 // 数据加载完成后更新图表
-                UpdatePlotModel();
+                // UpdatePlotModel();
             }
             catch (Exception ex)
             {
@@ -242,8 +242,9 @@ namespace BPA.ViewModels.Pages
             {
                 await _repository.DeleteRecordAsync(SelectedRecord.Id);
                 Records.Remove(SelectedRecord);
+
                 // 删除记录后更新图表
-                UpdatePlotModel();
+                // UpdatePlotModel();
             }
             catch (Exception ex)
             {
